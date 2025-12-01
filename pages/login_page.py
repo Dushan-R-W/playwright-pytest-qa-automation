@@ -11,8 +11,11 @@ class LoginPage:
         self.page.get_by_role("textbox", name="Password").fill(password)
         self.page.get_by_role("button", name=" Login").click()
     
-    def username_error_visible(self):
-        return self.page.get_by_text("Your username is invalid!").is_visible()
-    
     def is_login_page_visible(self):
         return self.page.get_by_role("heading", name="Login Page").is_visible()
+    
+    def username_error_visible(self):
+        return self.page.get_by_text("Your username is invalid! ×").is_visible()
+    
+    def password_error_visible(self):
+        return self.page.get_by_text("Your password is invalid! ×").is_visible()

@@ -1,18 +1,20 @@
 from pages.home_page import HomePage
+import requests
 
-def test_broken_links(page):
 
-    home_page = HomePage(page)
-    home_page.open()
-
+def test_broken_urls(page):
+    full_links = []
+    main_url = "https://the-internet.herokuapp.com"
+    page.goto(main_url)
     links = page.locator("a").element_handles()
-    
-    for link in links:
-        href = link.get_attribute("href")
+
+    for item in links:
+        href = item.get_attribute("href")
         if not href:
             continue
         elif href.startswith("/"):
-            full_link = home_page.get_base_url() + href
-            response = page.request.get(full_link)
-            print(response.status)
-            assert response.status < 400 or response.status in [401, 403], f"Broken link: {full_link} ({response.status})"
+            full_links.append(main_url + href)
+    
+    for link in full_links:
+        response = requests.get(link)
+        assert response.status_code < 400 or response.status_code in [200, 401]
