@@ -3,3 +3,4 @@ playwright
 requests
 pytest-html
 python-dotenv
+pytest-playwright
